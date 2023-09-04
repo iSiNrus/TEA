@@ -1,6 +1,6 @@
 package ru.barsik.tea.ui.screens.main
 
-data class ScreenState(
+data class MainScreenState(
     val isLoading: Boolean = false,
     val enterValue: String = "",
     val exitValue: String = "",

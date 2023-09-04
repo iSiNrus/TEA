@@ -5,6 +5,7 @@ import android.util.Log
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -22,12 +23,12 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import ru.barsik.tea.ui.theme.TEATheme
 import vivid.money.elmslie.core.store.Store
-import javax.inject.Inject
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
@@ -36,7 +37,7 @@ fun MainScreen(viewModel: MainScreenViewModel) {
     val states = viewModel.store.states.collectAsState()
     val snackbarHostState = remember { SnackbarHostState() }
     val scope = rememberCoroutineScope()
-    val effects = viewModel.store.effects.collectAsState(initial = null)
+    val effects = viewModel.store.effects.collectAsState(initial = MainScreenEffect.NoEffect)
     renderEffect(effects, scope, snackbarHostState)
     TEATheme {
         // A surface container using the 'background' color from the theme
@@ -69,13 +70,13 @@ fun MainScreen(viewModel: MainScreenViewModel) {
 }
 
 private fun renderEffect(
-    effects: State<MainScreenEffect?>,
+    effects: State<MainScreenEffect>,
     scope: CoroutineScope,
     snackbarHostState: SnackbarHostState
 ) {
     when (effects.value) {
         is MainScreenEffect.ShowBoom -> {
-            Log.d("SCREEN", "ru.barsik.tea.ui.screens.main.renderEffect: Boom")
+            Log.d("SCREEN", "Boom")
             scope.launch {
                 snackbarHostState.showSnackbar("Boom")
             }
@@ -86,12 +87,12 @@ private fun renderEffect(
 }
 
 @Composable
-fun RateText(state: ScreenState) {
+fun RateText(state: MainScreenState) {
     Text(text = "Rate: ${state.rate}")
 }
 
 @Composable
-fun ResetButton(store: Store<Event, MainScreenEffect, ScreenState>) {
+fun ResetButton(store: Store<Event, MainScreenEffect, MainScreenState>) {
     Button(onClick = {
         store.accept(Event.UI.ResetValuesEvent)
     }) {
@@ -100,12 +101,11 @@ fun ResetButton(store: Store<Event, MainScreenEffect, ScreenState>) {
 }
 
 @Composable
-fun BoomButton(store: Store<Event, MainScreenEffect, ScreenState>) {
+fun BoomButton(store: Store<Event, MainScreenEffect, MainScreenState>) {
     Button(onClick = {
         store.accept(Event.UI.BoomButtonClicked)
     }) {
         Text(text = "Boom!")
-
     }
 }
 
@@ -117,8 +117,8 @@ fun ResultText(resultText: String, prefix: String) {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun EditText(
-    state: ScreenState,
-    store: Store<Event, MainScreenEffect, ScreenState>
+    state: MainScreenState,
+    store: Store<Event, MainScreenEffect, MainScreenState>
 ) {
     TextField(
         value = state.enterValue,
@@ -129,7 +129,8 @@ fun EditText(
             state.messageError?.let {
                 Text(text = it, color = MaterialTheme.colorScheme.error)
             }
-        }
+        },
+        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
     )
 }
 

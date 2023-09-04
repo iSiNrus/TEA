@@ -3,7 +3,7 @@ package ru.barsik.tea.ui.screens.main
 import android.util.Log
 import vivid.money.elmslie.core.store.dsl.DslReducer
 
-class MainScreenReducer : DslReducer<Event, ScreenState, MainScreenEffect, Command>() {
+class MainScreenReducer : DslReducer<Event, MainScreenState, MainScreenEffect, Command>() {
     private val TAG = "REDUCER"
     override fun Result.reduce(event: Event): Any {
         return when (event) {
