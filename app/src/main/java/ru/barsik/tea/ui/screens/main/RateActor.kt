@@ -1,9 +1,9 @@
-package ru.barsik.tea
+package ru.barsik.tea.ui.screens.main
 
 import android.util.Log
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.flow
+import ru.barsik.tea.data.RateRepository
 import vivid.money.elmslie.core.store.Actor
 
 class RateActor : Actor<Command, Event>() {

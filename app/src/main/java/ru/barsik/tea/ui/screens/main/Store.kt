@@ -1,4 +1,4 @@
-package ru.barsik.tea
+package ru.barsik.tea.ui.screens.main
 
 import vivid.money.elmslie.core.store.ElmStore
 

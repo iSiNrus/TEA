@@ -1,4 +1,4 @@
-package ru.barsik.tea
+package ru.barsik.tea.data
 
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow

@@ -1,6 +1,7 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
+    id("kotlin-kapt")
 }
 
 android {
@@ -70,4 +71,8 @@ dependencies {
     implementation("com.github.vivid-money.elmslie:elmslie-core:${rootProject.extra["elmslieVersion"]}")
     implementation("com.github.vivid-money.elmslie:elmslie-android:${rootProject.extra["elmslieVersion"]}")
     implementation("com.github.vivid-money.elmslie:elmslie-compose:${rootProject.extra["elmslieComposeVersion"]}")
+
+    //Toothpick
+    implementation("com.github.stephanenicolas.toothpick:ktp:3.1.0")
+    kapt("com.github.stephanenicolas.toothpick:toothpick-compiler:3.1.0")
 }

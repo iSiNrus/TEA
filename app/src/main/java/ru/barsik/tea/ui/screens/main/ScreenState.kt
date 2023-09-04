@@ -1,4 +1,4 @@
-package ru.barsik.tea
+package ru.barsik.tea.ui.screens.main
 
 data class ScreenState(
     val isLoading: Boolean = false,

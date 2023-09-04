@@ -1,4 +1,4 @@
-package ru.barsik.tea
+package ru.barsik.tea.ui.screens.main
 
 import android.annotation.SuppressLint
 import android.util.Log
@@ -26,6 +26,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import ru.barsik.tea.ui.theme.TEATheme
+import vivid.money.elmslie.core.store.Store
+import javax.inject.Inject
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
@@ -54,11 +56,11 @@ fun MainScreen(viewModel: MainScreenViewModel) {
                             modifier = Modifier.fillMaxWidth()
                         ) {
                             Title("Converter currencies")
-                            EditText(state = states.value, viewModel = viewModel)
+                            EditText(state = states.value, store = viewModel.store)
                             ResultText(resultText = states.value.exitValue, prefix = "$")
                             RateText(states.value)
-                            ResetButton(viewModel)
-                            BoomButton(viewModel)
+                            ResetButton(store = viewModel.store)
+                            BoomButton(store = viewModel.store)
                         }
                     }
                 })
@@ -73,7 +75,7 @@ private fun renderEffect(
 ) {
     when (effects.value) {
         is MainScreenEffect.ShowBoom -> {
-            Log.d("SCREEN", "renderEffect: Boom")
+            Log.d("SCREEN", "ru.barsik.tea.ui.screens.main.renderEffect: Boom")
             scope.launch {
                 snackbarHostState.showSnackbar("Boom")
             }
@@ -89,20 +91,21 @@ fun RateText(state: ScreenState) {
 }
 
 @Composable
-fun ResetButton(viewModel: MainScreenViewModel) {
+fun ResetButton(store: Store<Event, MainScreenEffect, ScreenState>) {
     Button(onClick = {
-        viewModel.store.accept(Event.UI.ResetValuesEvent)
+        store.accept(Event.UI.ResetValuesEvent)
     }) {
         Text(text = "Reset")
     }
 }
 
 @Composable
-fun BoomButton(viewModel: MainScreenViewModel) {
+fun BoomButton(store: Store<Event, MainScreenEffect, ScreenState>) {
     Button(onClick = {
-        viewModel.store.accept(Event.UI.BoomButtonClicked)
+        store.accept(Event.UI.BoomButtonClicked)
     }) {
         Text(text = "Boom!")
+
     }
 }
 
@@ -113,11 +116,14 @@ fun ResultText(resultText: String, prefix: String) {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun EditText(modifier: Modifier = Modifier, state: ScreenState, viewModel: MainScreenViewModel) {
+fun EditText(
+    state: ScreenState,
+    store: Store<Event, MainScreenEffect, ScreenState>
+) {
     TextField(
         value = state.enterValue,
         onValueChange = { newText ->
-            viewModel.store.accept(Event.UI.TextChanged(newText))
+            store.accept(Event.UI.TextChanged(newText))
         },
         supportingText = {
             state.messageError?.let {
