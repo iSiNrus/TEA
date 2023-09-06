@@ -1,8 +1,8 @@
 package ru.barsik.tea
 
 import android.app.Application
+import com.example.rate_table_feature.di.RepositoryModule
 import ru.barsik.tea.di.ViewModelModule
-import toothpick.Scope
 import toothpick.Toothpick
 
 class App : Application() {
@@ -10,6 +10,6 @@ class App : Application() {
         super.onCreate()
 
         val appScope = Toothpick.openScope(this)
-        appScope.installModules(ViewModelModule(this))
+        appScope.installModules(ViewModelModule(this), RepositoryModule())
     }
 }

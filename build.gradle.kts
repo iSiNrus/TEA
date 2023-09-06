@@ -2,7 +2,9 @@
 plugins {
     id("com.android.application") version "8.1.1" apply false
     id("org.jetbrains.kotlin.android") version "1.9.0" apply false
+    id("com.android.library") version "8.1.1" apply false
 }
 
 val elmslieVersion by extra("3.0.0-alpha09")
 val elmslieComposeVersion by extra("2.1.1")
+val toothpickVersion by extra("3.1.0")

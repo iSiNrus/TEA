@@ -16,3 +16,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "TEA"
 include(":app")
+include(":rate-table-feature")

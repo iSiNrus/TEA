@@ -3,7 +3,8 @@ package ru.barsik.tea
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import ru.barsik.tea.ui.screens.main.MainScreen
+import com.example.rate_table_feature.ui.RatesScreen
+import com.example.rate_table_feature.ui.RatesViewModel
 import ru.barsik.tea.ui.screens.main.MainScreenViewModel
 import toothpick.Scope
 import toothpick.Toothpick
@@ -13,7 +14,10 @@ class MainActivity : ComponentActivity() {
 
     @Inject
     lateinit var viewModel: MainScreenViewModel
-    private lateinit var activityScope : Scope
+    private lateinit var activityScope: Scope
+
+    @Inject
+    lateinit var ratesViewModel: RatesViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -22,7 +26,8 @@ class MainActivity : ComponentActivity() {
         Toothpick.inject(this, activityScope)
 
         setContent {
-            MainScreen(viewModel)
+//            MainScreen(viewModel)
+            RatesScreen(viewModel = ratesViewModel)
         }
     }
 
