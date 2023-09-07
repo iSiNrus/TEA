@@ -6,7 +6,7 @@ plugins {
 
 android {
     namespace = "com.example.rate_table_feature"
-    compileSdk = 33
+    compileSdk = 34
 
     defaultConfig {
         minSdk = 24
@@ -28,7 +28,7 @@ android {
         compose = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.2"
+        kotlinCompilerExtensionVersion = "1.5.1"
     }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
@@ -53,6 +53,7 @@ dependencies {
     implementation("androidx.compose.ui:ui-graphics")
     implementation("androidx.compose.ui:ui-tooling-preview")
     implementation("androidx.compose.material3:material3")
+    implementation("androidx.compose.material:material-android:1.5.1")
 
     implementation("com.github.vivid-money.elmslie:elmslie-core:${rootProject.extra["elmslieVersion"]}")
     implementation("com.github.vivid-money.elmslie:elmslie-android:${rootProject.extra["elmslieVersion"]}")
